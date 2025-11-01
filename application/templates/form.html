@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}Formulär{% endblock %}
+{% block content %}
+    <div class="container mt-5 mb-5">
+        <div class="row p-5">
+            <div class="col-1"></div>
+            <div class="col-10 border p-3">
+                <h2 class="text-center">Välj datum och prisklass</h2>
+
+                {% if fel %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ fel }}
+                    </div>
+                {% endif %}
+
+                <form action="/api" method="post">
+                    <label for="år">År:</label><br/>
+                    <input type="text" id="år" name="år" class="form-control fpm"><br/>
+
+                    <label for="månad">Månad:</label><br/>
+                    <input type="text" id="månad" name="månad" class="form-control fpm"><br/>
+
+                    <label for="dag">Dag:</label><br/>
+                    <input type="text" id="dag" name="dag" class="form-control fpm"><br/>
+
+                    <label for="prisklass">Prisklass:</label><br/>
+                    <select id="prisklass" name="prisklass"class="form-control fpm"><br/>
+                        <option value="SE1">SE1</option>
+                        <option value="SE2">SE2</option>
+                        <option value="SE3">SE3</option>
+                        <option value="SE4">SE4</option>
+                    </select><br/>
+
+                    <button type="submit" class="btn btn-primary mt-4">Visa elpriser</button>
+                </form>
+            </div>    
+            <div class="col-1"></div>
+        </div>
+    </div>
+{% endblock %}
