@@ -1,2 +1,6 @@
 venv/
 *.log
+*.pyc
+*.pyo
+__pycache__/
+*.pyd

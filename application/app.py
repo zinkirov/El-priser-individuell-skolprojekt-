@@ -5,6 +5,24 @@ import json
 import pandas as pd
 app = Flask(__name__)
 
+def validate_date(year, month, day):
+    """
+    Validerar att ett datum ligger mellan 2022-11-01 och imorgon.
+    Returnerar True om giltigt, annars False.
+    Denna funktion används för TDD-exempel.
+    """
+    try:
+        datum = datetime(year, month, day)
+        min_datum = datetime(2022, 11, 1)
+        max_datum = datetime.now() + timedelta(days=1)
+        return min_datum <= datum <= max_datum
+    except ValueError:
+        return False
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 @app.route("/")
 def index():
     """Plats för era kommentarer"""
@@ -64,13 +82,9 @@ def api_post():
         return response
 
     except Exception as e:
-        felmeddelande = "Kunde inte hämta data.Kontrollera att datum och prisklass är giiltiga."
+        felmeddelande = "Kunde inte hämta data.Kontrollera att datum och prisklass är giltiga."
         return render_template("form.html", fel=felmeddelande, now=datetime.now())
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
-
+    
 
 if __name__ == "__main__":
     app.run()
