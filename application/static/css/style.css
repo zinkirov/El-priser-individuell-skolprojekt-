@@ -1,0 +1,70 @@
+body.api-bakgrund {
+  background-image: url("/static/images/api-bakgrund.png");
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+body.start-bakgrund {
+  background-image: url("/static/images/bakgrund.jpg");
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.table-wrapper {
+  backdrop-filter: blur(6px);                
+  -webkit-backdrop-filter: blur(6px);           
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 900px;
+  margin: 30px auto;
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);  
+}
+
+.table {
+  background-color: transparent;
+}
+
+.table td, .table th {
+  background-color: rgba(255, 255, 255, 0.05);  
+  color: white;
+  border-color: rgba(255, 255, 255, 0.2); 
+}
+
+
+.transparent-heading {
+  background-color: rgba(0, 0, 0, 0.6); 
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#content-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+
+#footer {
+  color: white;
+  padding: 20px;
+  text-align: center;
+}

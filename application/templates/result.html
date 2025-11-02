@@ -1,0 +1,24 @@
+{% set body_class = "api-bakgrund" %}
+{% extends "layout.html" %}
+{% block title %}Resultat{% endblock %}
+{% block content %}
+<div class="text-center mb-4 transparent-heading">
+    <h2 class="text-center mb-4">
+        Elpriser för {{ datum }} i område {{ område }}
+    </h2>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="table-wrapper">
+                <div class="table-responsive">
+                {{ data | safe }}
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="/form" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left"></i> Tillbaka till formuläret
+        </a>
+    </div>
+</div>
+{% endblock %}

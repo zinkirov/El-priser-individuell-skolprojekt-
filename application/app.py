@@ -21,17 +21,21 @@ def validate_date(year, month, day):
 
 @app.errorhandler(404)
 def page_not_found(e):
+    """Visar en anpassad 404-sida om användaren går till en ogiltig URL"""
+
     return render_template('404.html'), 404
 
 @app.route("/")
 def index():
-    """Plats för era kommentarer"""
-    return render_template("index.html", now=datetime.now())
+    """Visar formulärsidan där användaren kan välja datum och område"""
+
+    return render_template("index.html", now=datetime.now(), bakgrundsklass="start-bakgrund")
 
 @app.route("/form")
 def form():
-    """Plats för era kommentarer"""
-    return render_template("form.html", now=datetime.now())
+    """Visar formulärsidan där användaren kan välja datum och område"""
+    
+    return render_template("form.html", now=datetime.now(), bakgrundsklass="start-bakgrund")
 
 @app.post("/api")
 def api_post():
@@ -47,17 +51,13 @@ def api_post():
         #Skapa datumobjekt från formulärdata
         datum_str = f"{år}-{månad}-{dag}"
         datum = datetime.strptime(datum_str, "%Y-%m-%d")
-
-        min_datum = datetime(2022, 11, 1)                  # Tidigaste tillåtna datum
-        max_datum = datetime.now() + timedelta(days=1)     # Senaste tillåtna datum (imorgon)
-
-        # Kontrollera om datumet är giltigt
-        if datum < min_datum or datum > max_datum:
+        
+        # Om datumet är giltigt, fortsätter med API-anrop
+        if not validate_date(int(år), int(månad), int(dag)):
             felmeddelande = "Datumet måste vara mellan 2022-11-01 och imorgon."
-            return render_template("form.html", fel=felmeddelande)
-
-        # Om datumet är giltigt – fortsätt med API-anrop
-
+            return render_template("form.html", fel=felmeddelande, now=datetime.now(),
+                           år=år, månad=månad, dag=dag, prisklass=prisklass)   
+       
         data_url = f"https://www.elprisetjustnu.se/api/v1/prices/{år}/{månad}-{dag}_{prisklass}.json"
         json_data = requests.get(data_url)
         # Tolka JSON-svaret
@@ -74,7 +74,15 @@ def api_post():
             justify="left"
         )
         # Skapar svar med cookies
-        response = make_response(render_template("index.html", data=table_data, now=datetime.now()))
+        response = make_response(render_template(
+        "result.html",
+        data=table_data,
+         datum=datum_str,
+        område=prisklass,
+        now=datetime.now(),
+        bakgrundsklass="api-bakgrund"
+
+        ))
         response.set_cookie("år", år)
         response.set_cookie("månad", månad)
         response.set_cookie("dag", dag)
