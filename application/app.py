@@ -1,4 +1,5 @@
 import json
+import os
 from datetime import datetime, timedelta
 
 import pandas as pd
@@ -98,6 +99,10 @@ def api_post():
 @app.get("/health")
 def health():
     return {"status": "ok"}, 200
+
+@app.get("/version")
+def version():
+    return {"version": os.getenv("APP_VERSION", "dev")}, 200
 
 
 if __name__ == "__main__":
