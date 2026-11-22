@@ -1,6 +1,7 @@
-import pytest
 from datetime import datetime, timedelta
+
 from application.app import validate_date
+
 
 def test_validate_date_valid():
     """Testar giltigt datum inom tillåtet intervall"""
