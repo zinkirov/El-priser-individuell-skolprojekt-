@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, make_response
-from datetime import datetime, timedelta
-import requests
 import json
+from datetime import datetime, timedelta
+
 import pandas as pd
+import requests
+from flask import Flask, make_response, render_template, request
+
 app = Flask(__name__)
 
 def validate_date(year, month, day):
@@ -50,7 +52,7 @@ def api_post():
 
         #Skapa datumobjekt från formulärdata
         datum_str = f"{år}-{månad}-{dag}"
-        datum = datetime.strptime(datum_str, "%Y-%m-%d")
+        datetime.strptime(datum_str, "%Y-%m-%d")
         
         # Om datumet är giltigt, fortsätter med API-anrop
         if not validate_date(int(år), int(månad), int(dag)):
@@ -89,10 +91,14 @@ def api_post():
         response.set_cookie("prisklass", prisklass)
         return response
 
-    except Exception as e:
+    except (ValueError, requests.exceptions.RequestException):
         felmeddelande = "Kunde inte hämta data.Kontrollera att datum och prisklass är giltiga."
         return render_template("form.html", fel=felmeddelande, now=datetime.now())
-    
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}, 200
+
 
 if __name__ == "__main__":
     app.run()
