@@ -16,7 +16,7 @@ def validate_date(year, month, day):
     try:
         datum = datetime(year, month, day)
         min_datum = datetime(2022, 11, 1)
-        max_datum = datetime.now() - timedelta(days=1)
+        max_datum = datetime.now() + timedelta(days=1)
         return min_datum <= datum <= max_datum
     except ValueError:
         return False
