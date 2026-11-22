@@ -33,7 +33,7 @@ jobs:
 
       - name: Save test report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: test-results
           path: test-results.xml
@@ -53,7 +53,7 @@ jobs:
         run: docker save --output elpriset-image.tar elpriset:${{ github.sha }}
 
       - name: Upload Docker image
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: elpriset-image
           path: elpriset-image.tar
@@ -68,7 +68,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Download Docker image
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         with:
           name: elpriset-image
 
@@ -96,4 +96,3 @@ jobs:
       - name: Stop and remove container
         if: always()
         run: docker rm --force elpriset-ci
-        
