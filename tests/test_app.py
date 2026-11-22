@@ -137,3 +137,20 @@ def test_health_endpoint(client):
 
     assert response.status_code == 200
     assert response.get_json() == {"status": "ok"}
+
+def test_version_endpoint_returns_configured_version(client, monkeypatch):
+    monkeypatch.setenv("APP_VERSION", "test-commit")
+
+    response = client.get("/version")
+
+    assert response.status_code == 200
+    assert response.get_json() == {"version": "test-commit"}
+
+
+def test_version_endpoint_defaults_to_dev(client, monkeypatch):
+    monkeypatch.delenv("APP_VERSION", raising=False)
+
+    response = client.get("/version")
+
+    assert response.status_code == 200
+    assert response.get_json() == {"version": "dev"}
