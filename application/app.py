@@ -94,7 +94,11 @@ def api_post():
     except (ValueError, requests.exceptions.RequestException):
         felmeddelande = "Kunde inte hämta data.Kontrollera att datum och prisklass är giltiga."
         return render_template("form.html", fel=felmeddelande, now=datetime.now())
-    
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}, 200
+
 
 if __name__ == "__main__":
     app.run()

@@ -131,3 +131,9 @@ def test_form_handles_price_service_connection_error(client, monkeypatch):
     assert "<table" not in html
 
     fake_get.assert_called_once()
+
+def test_health_endpoint(client):
+    response = client.get("/health")
+
+    assert response.status_code == 200
+    assert response.get_json() == {"status": "ok"}
